@@ -1,20 +1,80 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🏥 MSM Hospital Website
 
-# Run and deploy your AI Studio app
+A modern, fully responsive hospital web app built with vanilla HTML, CSS & JavaScript.
 
-This contains everything you need to run your app locally.
+## 🌐 Live Pages
 
-View your app in AI Studio: https://ai.studio/apps/2963b3ec-9177-41a0-83a4-3e934b0fb636
+| Page | Description |
+|------|-------------|
+| `index.html` | Main hospital website |
+| `admin.html` | Admin portal (protected) |
 
-## Run Locally
+---
 
-**Prerequisites:**  Node.js
+## ✨ Features
 
+### Patient Side (`index.html`)
+- **Home** — Hero, stats, featured departments & doctors, testimonials
+- **About** — Hospital history, mission/vision, why choose MSM
+- **Departments** — 6 departments, each with assigned doctors
+- **Doctors** — Searchable & filterable doctor cards
+- **Appointment Booking** — Modal form, saves to `localStorage`
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Admin Portal (`admin.html`)
+- 🔐 Protected login (email + password)
+- 📊 Dashboard with live stats (Total / Today / Pending / Confirmed)
+- 📋 All bookings table with search & status filter
+- ✅ Confirm / Cancel / Delete bookings
+- ➕ Manually add new bookings
+- 🔄 Auto-syncs with patient bookings via `localStorage`
+
+---
+
+## 🏥 Departments & Doctors
+
+| Department | Doctors |
+|------------|---------|
+| Cardiology | Dr. Arif Hussain, Dr. Sana Mirza |
+| Neurology | Dr. Kamran Sheikh, Dr. Ayesha Raza |
+| Orthopedics | Dr. Tariq Mahmood, Dr. Hina Baig |
+| Pediatrics | Dr. Usman Ali, Dr. Nadia Khan |
+| Dermatology | Dr. Bilal Ahmed, Dr. Rafia Siddiqui |
+| Gynecology | Dr. Sobia Qureshi, Dr. Maryam Farooq |
+
+---
+
+## 🛠 Tech Stack
+
+- HTML5, CSS3, Vanilla JavaScript
+- Font Awesome (icons)
+- Google Fonts — DM Serif Display + DM Sans
+- localStorage (data persistence)
+
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/abdulmoiztech/MSM-hospital
+cd msm-hospital
+# Open index.html in browser
+```
+
+No build tools. No dependencies. Just open and run.
+
+---
+
+## 📁 Project Structure
+
+```
+msm-hospital/
+├── index.html      # Main hospital website
+├── admin.html      # Admin portal
+└── README.md
+```
+
+---
+
+## 📄 License
+
+MIT — free to use and modify.
