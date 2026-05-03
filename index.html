@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSM Hospital | Your Health, Our Mission</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0a2342;
+            --primary-light: #163a66;
+            --accent: #f0a500;
+            --accent-hover: #d18f00;
+            --white: #ffffff;
+            --bg-light: #f8f9fa;
+            --text: #333333;
+            --text-muted: #666666;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-pending { 
+            background: rgba(240, 165, 0, 0.1); 
+            color: #f0a500; 
+        }
+
+        .badge-confirmed { 
+            background: rgba(40, 167, 69, 0.1); 
+            color: #28a745; 
+        }
+
+        .badge-cancelled { 
+            background: rgba(220, 53, 69, 0.1); 
+            color: #dc3545; 
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            height: 70px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            transition: var(--transition);
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--primary);
+            position: relative;
+            padding: 5px 0;
+            white-space: nowrap;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a.active::after,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Nav Toggle */
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            z-index: 1001;
+        }
+
+        /* Pages visibility */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(10, 35, 66, 0.8), rgba(10, 35, 66, 0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background-color: var(--accent);
+            padding: 40px 0;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            gap: 20px;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--primary-light);
+        }
+
+        /* Section Headlines */
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        /* Department Cards */
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .dept-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #eee;
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .dept-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .dept-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Doctor Cards */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .doc-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #eee;
+            transition: var(--transition);
+        }
+
+        .doc-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .doc-img {
+            width: 100%;
+            height: 300px;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+            font-family: 'DM Serif Display', serif;
+            position: relative;
+        }
+
+        .doc-info {
+            padding: 25px;
+        }
+
+        .doc-dept {
+            display: inline-block;
+            background-color: rgba(240, 165, 0, 0.1);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .doc-info h3 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .doc-spec {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .doc-exp {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--bg-light);
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .testi-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .testi-card i {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(240, 165, 0, 0.2);
+        }
+
+        .testi-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .testi-author {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .footer-about p {
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-contact i {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* About Page Specific */
+        .about-hero {
+            background: var(--bg-light);
+            padding: 120px 0 80px;
+        }
+
+        .about-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .mission-item {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mission-item i {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        /* Doctors Filter */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: var(--bg-light);
+            color: var(--primary);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 35, 66, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: var(--white);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            position: relative;
+            animation: modalFadeIn 0.4s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalFadeIn {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .close-btn {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .appointment-form {
+            padding: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(240, 165, 0, 0.1);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-msg i {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-msg h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Department Expandable List */
+        .dept-detail {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            text-align: left;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dept-detail h4 {
+            margin: 20px 0 10px;
+            color: var(--primary);
+        }
+
+        .dept-doc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dept-doc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-split {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 15px;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--white);
+                padding: 40px 20px;
+                gap: 25px;
+                text-align: center;
+                box-shadow: var(--shadow-md);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block;
+                order: 2;
+                margin-left: 15px;
+            }
+
+            .navbar .btn-primary {
+                padding: 6px 12px;
+                font-size: 11px;
+                white-space: normal;
+                line-height: 1.2;
+                max-width: 100px;
+                order: 3;
+            }
+
+            .logo {
+                order: 1;
+                margin-right: auto;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo" onclick="navigateTo('home')">
+                <i class="fas fa-hospital-alt"></i>
+                MSM HOSPITAL
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home" id="nav-home" class="active" onclick="navigateTo('home')">Home</a></li>
+                <li><a href="#about" id="nav-about" onclick="navigateTo('about')">About</a></li>
+                <li><a href="#departments" id="nav-departments" onclick="navigateTo('departments')">Departments</a></li>
+                <li><a href="#doctors" id="nav-doctors" onclick="navigateTo('doctors')">Doctors</a></li>
+                <li id="li-bookings" style="display: none;"><a href="#bookings" id="nav-bookings" onclick="navigateTo('bookings')">My Bookings</a></li>
+            </ul>
+            <button class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="auth-actions" style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn btn-primary" id="btn-login" onclick="login()">Sign In</button>
+                <div id="user-profile" style="display: none; align-items: center; gap: 10px;">
+                    <span id="user-name" style="font-size: 0.8rem; color: var(--primary); font-weight: 600;"></span>
+                    <button class="btn btn-primary" onclick="openModal()">Book Appointment</button>
+                    <button onclick="logout()" style="color: var(--text-muted); font-size: 0.8rem;"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page active">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Your Health, Our Mission</h1>
+                    <p>Experience world-class healthcare with compassionate professionals and cutting-edge technology. Your wellbeing is our top priority 24/7.</p>
+                    <button class="btn btn-accent" onclick="openModal()">Book Appointment Now</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stats-container">
+                    <div class="stat-item"><h3>500+</h3><p>Doctors</p></div>
+                    <div class="stat-item"><h3>20+</h3><p>Departments</p></div>
+                    <div class="stat-item"><h3>50K+</h3><p>Patients</p></div>
+                    <div class="stat-item"><h3>24/7</h3><p>Care Team</p></div>
+                </div>
+            </div>
+        </div>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Departments</h2>
+                    <p>We provide specialized care across various medical fields to ensure comprehensive treatment for every patient.</p>
+                </div>
+                <div class="dept-grid">
+                    <div class="dept-card" onclick="navigateTo('departments')">
+                        <i class="fas fa-heartbeat dept-icon"></i>
+                        <h3>Cardiology</h3>
+                        <p>Comprehensive heart care from diagnostics to complex surgical interventions.</p>
+                    </div>
+                    <div class="dept-card" onclick="navigateTo('departments')">
+                        <i class="fas fa-brain dept-icon"></i>
+                        <h3>Neurology</h3>
+                        <p>Expert management of nervous system disorders with advanced neurological mapping.</p>
+                    </div>
+                    <div class="dept-card" onclick="navigateTo('departments')">
+                        <i class="fas fa-bone dept-icon"></i>
+                        <h3>Orthopedics</h3>
+                        <p>Specialized treatment for musculoskeletal injuries and orthopedic rehabilitation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What Our Patients Say</h2>
+                    <p>Real stories from people who trusted us with their health.</p>
+                </div>
+                <div class="testi-grid">
+                    <div class="testi-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="testi-text">"The medical care I received at MSM was exceptional. The doctors were patient, explains everything clearly, and the staff made me feel like family."</p>
+                        <p class="testi-author">- Mohammed Ali</p>
+                    </div>
+                    <div class="testi-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="testi-text">"Clean facility, prompt service, and highly skilled specialists. I highly recommend MSM for any specialized surgical procedures."</p>
+                        <p class="testi-author">- Fatima Sheikh</p>
+                    </div>
+                    <div class="testi-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="testi-text">"During our stay, every nurse was attentive and kind. We felt truly cared for during a very difficult time for our family."</p>
+                        <p class="testi-author">- Salman Khan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Meet Our Experts</h2>
+                    <p>Our senior consultants and healthcare providers are ready to help you.</p>
+                </div>
+                <div class="doc-grid" id="featured-docs">
+                    <!-- Loaded via JS -->
+                </div>
+                <div style="text-align: center; margin-top: 50px;">
+                    <button class="btn btn-primary" onclick="navigateTo('doctors')">View All Doctors</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="page-about" class="page">
+        <section class="about-hero">
+            <div class="container">
+                <div class="about-split">
+                    <div class="about-text">
+                        <h2>Rooted in Excellence, Driven by Compassion</h2>
+                        <p>Established in 1995, MSM Hospital has evolved from a small clinic to a premiere multi-specialty healthcare institution. We are dedicated to providing state-of-the-art medical services to the community with integrity and excellence.</p>
+                        <div class="mission-grid">
+                            <div class="mission-item">
+                                <i class="fas fa-eye"></i>
+                                <h3>Our Vision</h3>
+                                <p>To be the first-choice healthcare provider recognized for clinical excellence and patient safety.</p>
+                            </div>
+                            <div class="mission-item">
+                                <i class="fas fa-bullseye"></i>
+                                <h3>Our Mission</h3>
+                                <p>To provide personalized healthcare through teamwork, advanced technology, and human compassion.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-img">
+                        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1000" alt="Hospital Interior" style="width: 100%; border-radius: 12px; box-shadow: var(--shadow-lg);">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Choose MSM?</h2>
+                    <p>We offer distinct advantages that make us the preferred healthcare destination for thousands of families.</p>
+                </div>
+                <div class="dept-grid">
+                    <div class="dept-card">
+                        <i class="fas fa-user-md dept-icon"></i>
+                        <h3>Global Experts</h3>
+                        <p>Our team consists of internationally trained specialists with decades of clinical experience.</p>
+                    </div>
+                    <div class="dept-card">
+                        <i class="fas fa-microscope dept-icon"></i>
+                        <h3>Advanced Tech</h3>
+                        <p>Equipped with the latest robotic surgery systems and high-precision imaging diagnostics.</p>
+                    </div>
+                    <div class="dept-card">
+                        <i class="fas fa-ambulance dept-icon"></i>
+                        <h3>Emergency 24/7</h3>
+                        <p>A dedicated trauma center and rapid response ambulance fleet ready for any emergency.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DEPARTMENTS PAGE -->
+    <div id="page-departments" class="page">
+        <section class="section-padding" style="background: var(--bg-light);">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Medical Departments</h2>
+                    <p>Explore our specialized centers of excellence. Click on a department to see its details and specialist team.</p>
+                </div>
+                <div class="dept-grid" id="departments-list">
+                    <!-- Loaded via JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DOCTORS PAGE -->
+    <div id="page-doctors" class="page">
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Medical Specialists</h2>
+                    <p>Filter by department to find the right expert for your health needs.</p>
+                </div>
+
+                <div class="filter-tabs" id="filter-tabs">
+                    <button class="filter-btn active" onclick="filterDoctors('All', this)">All Departments</button>
+                    <!-- Tabs loaded via JS -->
+                </div>
+
+                <div class="doc-grid" id="doctors-list">
+                    <!-- Filtered list via JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- BOOKINGS PAGE -->
+    <div id="page-bookings" class="page">
+        <section class="section-padding" style="background: var(--bg-light); min-height: 80vh;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Your Appointments</h2>
+                    <p>View and manage your upcoming medical consultations at MSM Hospital.</p>
+                </div>
+                
+                <div id="bookings-empty" style="text-align: center; padding: 40px; display: none;">
+                    <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--text-muted); margin-bottom: 20px; opacity: 0.3;"></i>
+                    <h3>No appointments found</h3>
+                    <p>You haven't booked any consultations yet.</p>
+                    <button class="btn btn-primary" style="margin-top: 20px;" onclick="openModal()">Book Your First Appointment</button>
+                </div>
+
+                <div class="doc-grid" id="user-bookings-list">
+                    <!-- Bookings loaded via JS -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h2>MSM Hospital</h2>
+                    <p>Dedicated to providing accessible, high-quality medical expertise since 1995. We are a trusted name in healthcare, committed to your family's lifelong wellbeing.</p>
+                    <div class="social-links">
+                        <a href="#" style="margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+                        <li><a href="#" onclick="navigateTo('about')">About Us</a></li>
+                        <li><a href="#" onclick="navigateTo('departments')">Departments</a></li>
+                        <li><a href="#" onclick="navigateTo('doctors')">Our Doctors</a></li>
+                        <li><a href="#" onclick="openModal()">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 12/B Medical Square, Healthcare District, City Code 5400</p>
+                    <p><i class="fas fa-phone-alt"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> contact@msmhospital.com</p>
+                    <p><i class="fas fa-clock"></i> 24/7 Helpline & Emergency</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 MSM Hospital. All rights reserved. Professional Healthcare Integrity.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Appointment Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Book Appointment</h2>
+                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="booking-container">
+                <form class="appointment-form" id="appointment-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dept-select">Department</label>
+                            <select id="dept-select" onchange="updateDocDropdown(this.value)" required>
+                                <option value="" disabled selected>Select Department</option>
+                                <!-- Options via JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="doc-select">Specialist Doctor</label>
+                            <select id="doc-select" required>
+                                <option value="" disabled selected>Select Doctor</option>
+                                <option value="">Please select a department first</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Preferred Time</label>
+                            <select id="time" required>
+                                <option value="morning">Morning (9 AM - 12 PM)</option>
+                                <option value="afternoon">Afternoon (1 PM - 4 PM)</option>
+                                <option value="evening">Evening (5 PM - 8 PM)</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Message / Symptoms (Optional)</label>
+                            <textarea id="message" rows="3" placeholder="Briefly describe your health concern"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
+                </form>
+            </div>
+
+            <div class="success-msg" id="success-msg">
+                <i class="fas fa-check-circle"></i>
+                <h2>Appointment Confirmed!</h2>
+                <p>Thank you for choosing MSM Hospital. A confirmation email and SMS has been sent to you with appointment details. Our team will contact you shortly.</p>
+                <button class="btn btn-primary" style="margin-top: 30px;" onclick="closeModal()">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, where, getDocs, onSnapshot, serverTimestamp, getDocFromServer } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+          projectId: "msm-hospital",
+          appId: "1:601626535594:web:014a8a191bb3c9b11312d3",
+          apiKey: "AIzaSyCmCQWBpM6yra2mg9cZRjby03ZLK6lHSkU",
+          authDomain: "msm-hospital.firebaseapp.com",
+          firestoreDatabaseId: "ai-studio-2963b3ec-9177-41a0-83a4-3e934b0fb636",
+          storageBucket: "msm-hospital.firebasestorage.app",
+          messagingSenderId: "601626535594"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+
+        // Security Error Handling Helpers
+        const OperationType = {
+          CREATE: 'create',
+          UPDATE: 'update',
+          DELETE: 'delete',
+          LIST: 'list',
+          GET: 'get',
+          WRITE: 'write',
+        };
+
+        function handleFirestoreError(error, operationType, path) {
+          const errInfo = {
+            error: error instanceof Error ? error.message : String(error),
+            authInfo: {
+              userId: auth.currentUser?.uid,
+              email: auth.currentUser?.email,
+              emailVerified: auth.currentUser?.emailVerified,
+              isAnonymous: auth.currentUser?.isAnonymous,
+            },
+            operationType,
+            path
+          };
+          console.error('Firestore Error: ', JSON.stringify(errInfo));
+          throw new Error(JSON.stringify(errInfo));
+        }
+
+        async function testConnection() {
+          try {
+            await getDocFromServer(doc(db, 'test', 'connection'));
+          } catch (error) {
+            if (error instanceof Error && error.message.includes('the client is offline')) {
+              console.error("Please check your Firebase configuration.");
+            }
+          }
+        }
+        testConnection();
+
+        // Data Configuration
+        const hospitalData = {
+            departments: [
+                { id: 'cardiology', name: 'Cardiology', icon: 'fas fa-heartbeat', desc: 'Heart and vascular healthcare specialists using advanced surgical techniques.' },
+                { id: 'neurology', name: 'Neurology', icon: 'fas fa-brain', desc: 'Expert neurological care for brain, spine, and nerve disorders.' },
+                { id: 'orthopedics', name: 'Orthopedics', icon: 'fas fa-bone', desc: 'Surgical and non-surgical treatment for bones and joints.' },
+                { id: 'pediatrics', name: 'Pediatrics', icon: 'fas fa-baby', desc: 'Specialized healthcare dedicated to infants, children, and adolescents.' },
+                { id: 'dermatology', name: 'Dermatology', icon: 'fas fa-allergies', desc: 'Comprehensive medical and cosmetic skin treatments.' },
+                { id: 'gynecology', name: 'Gynecology', icon: 'fas fa-female', desc: 'Women\'s health services and maternal care expertise.' }
+            ],
+            doctors: [
+                { id: 1, name: 'Dr. Arif Hussain', dept: 'Cardiology', spec: 'Heart Specialist', exp: 15 },
+                { id: 2, name: 'Dr. Sana Mirza', dept: 'Cardiology', spec: 'Consultant Cardiologist', exp: 12 },
+                { id: 3, name: 'Dr. Kamran Sheikh', dept: 'Neurology', spec: 'Neurosurgeon', exp: 18 },
+                { id: 4, name: 'Dr. Ayesha Raza', dept: 'Neurology', spec: 'Neurologist', exp: 10 },
+                { id: 5, name: 'Dr. Tariq Mahmood', dept: 'Orthopedics', spec: 'Orthopedic Surgeon', exp: 20 },
+                { id: 6, name: 'Dr. Hina Baig', dept: 'Orthopedics', spec: 'Joint Replacement Expert', exp: 14 },
+                { id: 7, name: 'Dr. Usman Ali', dept: 'Pediatrics', spec: 'Child Specialist', exp: 9 },
+                { id: 8, name: 'Dr. Nadia Khan', dept: 'Pediatrics', spec: 'Neonatologist', exp: 11 },
+                { id: 9, name: 'Dr. Bilal Ahmed', dept: 'Dermatology', spec: 'Skin Specialist', exp: 13 },
+                { id: 10, name: 'Dr. Rafia Siddiqui', dept: 'Dermatology', spec: 'Cosmetic Surgeon', exp: 8 },
+                { id: 11, name: 'Dr. Sobia Qureshi', dept: 'Gynecology', spec: 'Maternal Care Expert', exp: 16 },
+                { id: 12, name: 'Dr. Maryam Farooq', dept: 'Gynecology', spec: 'Gynecology Oncology', exp: 12 }
+            ]
+        };
+
+        // Navigation Logic
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinksList = document.querySelector('.nav-links');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navLinksList.classList.toggle('active');
+                const icon = navToggle.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
+
+        window.navigateTo = (pageId) => {
+            // Close mobile menu if open
+            if (navLinksList.classList.contains('active')) {
+                navLinksList.classList.remove('active');
+                const icon = navToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            // Remove active from links
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            
+            // Show target page
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) targetPage.classList.add('active');
+            
+            // Set nav link active
+            const navLink = document.getElementById(`nav-${pageId}`);
+            if (navLink) navLink.classList.add('active');
+            
+            // Smooth scroll to top
+            window.scrollTo(0, 0);
+
+            if (pageId === 'bookings') {
+                loadUserBookings();
+            }
+        };
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Auth Logic
+        window.isLoggingIn = false;
+        window.login = async () => {
+            if (window.isLoggingIn) return;
+            window.isLoggingIn = true;
+
+            const provider = new GoogleAuthProvider();
+            try {
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                if (error.code !== 'auth/cancelled-popup-request' && error.code !== 'auth/popup-closed-by-user') {
+                    console.error("Login failed:", error);
+                    alert("Login failed. Please try again: " + (error.message || error));
+                }
+            } finally {
+                window.isLoggingIn = false;
+            }
+        };
+
+        window.logout = () => {
+            signOut(auth);
+            window.navigateTo('home');
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            const btnLogin = document.getElementById('btn-login');
+            const userProfile = document.getElementById('user-profile');
+            const userName = document.getElementById('user-name');
+            const liBookings = document.getElementById('li-bookings');
+
+            if (user) {
+                btnLogin.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userName.textContent = user.displayName;
+                liBookings.style.display = 'block';
+
+                // Sync user profile to Firestore
+                const userRef = doc(db, 'users', user.uid);
+                try {
+                    const userSnap = await getDoc(userRef);
+                    if (!userSnap.exists()) {
+                        await setDoc(userRef, {
+                            name: user.displayName,
+                            email: user.email,
+                            createdAt: serverTimestamp()
+                        });
+                    }
+                } catch (error) {
+                    // This might fail if rules aren't deployed yet, but handleFirestoreError would be better
+                    console.warn("User sync error", error);
+                }
+            } else {
+                btnLogin.style.display = 'block';
+                userProfile.style.display = 'none';
+                liBookings.style.display = 'none';
+            }
+        });
+
+        // Initialize UI Elements
+        function initApp() {
+            renderFeaturedDocs();
+            renderDepartments();
+            renderFilterTabs();
+            filterDoctors('All');
+            populateDeptDropdown();
+        }
+
+        function renderFeaturedDocs() {
+            const container = document.getElementById('featured-docs');
+            const featured = hospitalData.doctors.slice(0, 3);
+            container.innerHTML = featured.map(doc => createDocCard(doc)).join('');
+        }
+
+        function renderDepartments() {
+            const container = document.getElementById('departments-list');
+            container.innerHTML = hospitalData.departments.map(dept => `
+                <div class="dept-card" onclick="toggleDeptDetail('${dept.id}')">
+                    <i class="${dept.icon} dept-icon"></i>
+                    <h3>${dept.name}</h3>
+                    <p>${dept.desc}</p>
+                    <div id="detail-${dept.id}" class="dept-detail">
+                        <h4>Our Specialists:</h4>
+                        <div class="dept-doc-list">
+                            ${hospitalData.doctors
+                                .filter(d => d.dept === dept.name)
+                                .map(d => `<div class="dept-doc-item"><i class="fas fa-user-md" style="color: var(--accent);"></i> <span>${d.name} (${d.spec})</span></div>`)
+                                .join('')}
+                        </div>
+                        <button class="btn btn-primary" style="margin-top:20px; width:100%;" onclick="event.stopPropagation(); window.openModalWithDept('${dept.name}')">Book Appointment</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.toggleDeptDetail = (deptId) => {
+            const detail = document.getElementById(`detail-${deptId}`);
+            const isVisible = detail.style.display === 'block';
+            document.querySelectorAll('.dept-detail').forEach(d => d.style.display = 'none');
+            detail.style.display = isVisible ? 'none' : 'block';
+        };
+
+        function renderFilterTabs() {
+            const container = document.getElementById('filter-tabs');
+            const depts = hospitalData.departments.map(d => d.name);
+            let html = `<button class="filter-btn active" onclick="window.filterDoctors('All', this)">All Departments</button>`;
+            depts.forEach(d => {
+                html += `<button class="filter-btn" onclick="window.filterDoctors('${d}', this)">${d}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        window.filterDoctors = (dept, el) => {
+            if (el) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                el.classList.add('active');
+            }
+            const container = document.getElementById('doctors-list');
+            const filtered = dept === 'All' ? hospitalData.doctors : hospitalData.doctors.filter(d => d.dept === dept);
+            container.innerHTML = filtered.map(doc => createDocCard(doc)).join('');
+        };
+
+        function createDocCard(doc) {
+            const initials = doc.name.split(' ').map(n => n[0]).join('');
+            return `
+                <div class="doc-card">
+                    <div class="doc-img">${initials}</div>
+                    <div class="doc-info">
+                        <span class="doc-dept">${doc.dept}</span>
+                        <h3>${doc.name}</h3>
+                        <p class="doc-spec">${doc.spec}</p>
+                        <div class="doc-meta">
+                            <span class="doc-exp">${doc.exp} Years Experience</span>
+                            <button class="btn btn-primary" style="padding: 8px 15px; font-size: 0.8rem;" onclick="window.openModalWithDoc('${doc.dept}', '${doc.name}')">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modal Logic
+        const overlay = document.getElementById('modal-overlay');
+        const bookingCont = document.getElementById('booking-container');
+        const successCont = document.getElementById('success-msg');
+
+        window.openModal = () => {
+            if (!auth.currentUser) {
+                window.login();
+                return;
+            }
+            overlay.style.display = 'flex';
+            bookingCont.style.display = 'block';
+            successCont.style.display = 'none';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('appointment-form').reset();
+            window.updateDocDropdown('');
+            
+            // Auto-fill user email and name
+            document.getElementById('email').value = auth.currentUser.email;
+            document.getElementById('name').value = auth.currentUser.displayName;
+        };
+
+        window.closeModal = () => {
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        window.openModalWithDept = (deptName) => {
+            window.openModal();
+            if (!auth.currentUser) return;
+            const deptSelect = document.getElementById('dept-select');
+            deptSelect.value = deptName;
+            window.updateDocDropdown(deptName);
+        };
+
+        window.openModalWithDoc = (deptName, docName) => {
+            window.openModal();
+            if (!auth.currentUser) return;
+            const deptSelect = document.getElementById('dept-select');
+            deptSelect.value = deptName;
+            window.updateDocDropdown(deptName);
+            setTimeout(() => {
+                const docSelect = document.getElementById('doc-select');
+                docSelect.value = docName;
+            }, 10);
+        };
+
+        function populateDeptDropdown() {
+            const select = document.getElementById('dept-select');
+            hospitalData.departments.forEach(dept => {
+                const opt = document.createElement('option');
+                opt.value = dept.name;
+                opt.textContent = dept.name;
+                select.appendChild(opt);
+            });
+        }
+
+        window.updateDocDropdown = (deptName) => {
+            const docSelect = document.getElementById('doc-select');
+            docSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
+            if (!deptName) {
+                const opt = document.createElement('option');
+                opt.value = "";
+                opt.textContent = "Please select a department first";
+                docSelect.appendChild(opt);
+                return;
+            }
+            const docs = hospitalData.doctors.filter(d => d.dept === deptName);
+            docs.forEach(doc => {
+                const opt = document.createElement('option');
+                opt.value = doc.name;
+                opt.textContent = doc.name;
+                docSelect.appendChild(opt);
+            });
+        };
+
+        window.handleFormSubmit = async (e) => {
+            e.preventDefault();
+            if (!auth.currentUser) return;
+
+            const bookingData = {
+                patientName: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                department: document.getElementById('dept-select').value,
+                doctor: document.getElementById('doc-select').value,
+                preferredDate: document.getElementById('date').value,
+                preferredTime: document.getElementById('time').value,
+                message: document.getElementById('message').value,
+                status: 'Pending',
+                userId: auth.currentUser.uid,
+                createdAt: serverTimestamp()
+            };
+
+            const path = 'bookings';
+            try {
+                // Save to Firestore
+                const docRef = await addDoc(collection(db, path), bookingData);
+                
+                // ALSO Save to localStorage for Admin Portal sync
+                const storageKey = 'msmBookings';
+                const existingBookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                const localBooking = {
+                    ...bookingData,
+                    id: docRef.id,
+                    createdAt: new Date().toISOString()
+                };
+                existingBookings.push(localBooking);
+                localStorage.setItem(storageKey, JSON.stringify(existingBookings));
+
+                bookingCont.style.display = 'none';
+                successCont.style.display = 'block';
+            } catch (error) {
+                handleFirestoreError(error, OperationType.CREATE, path);
+            }
+        };
+
+        async function loadUserBookings() {
+            if (!auth.currentUser) return;
+
+            const container = document.getElementById('user-bookings-list');
+            const emptyState = document.getElementById('bookings-empty');
+            container.innerHTML = '<div style="text-align:center; grid-column: 1/-1;">Loading your appointments...</div>';
+            emptyState.style.display = 'none';
+
+            const q = query(collection(db, 'bookings'), where('userId', '==', auth.currentUser.uid));
+            try {
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    container.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                container.innerHTML = '';
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const date = data.preferredDate;
+                    const time = data.preferredTime;
+                    
+                    container.innerHTML += `
+                        <div class="testi-card" style="font-style: normal; text-align: left;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                                <span class="doc-dept">${data.department}</span>
+                                <span class="status-badge badge-${(data.status || 'Pending').toLowerCase()}" style="font-size: 0.65rem; padding: 2px 8px;">${data.status || 'Pending'}</span>
+                            </div>
+                            <h3 style="color: var(--primary); margin-bottom: 5px;">${data.doctor}</h3>
+                            <p style="font-weight: 600; font-size: 0.9rem; color: var(--accent);"><i class="far fa-calendar-alt"></i> ${date} | <span style="text-transform: capitalize;">${time}</span></p>
+                            <p style="margin-top: 10px; font-size: 0.85rem; border-top: 1px solid #eee; padding-top: 10px;">
+                                <i class="far fa-user"></i> Patient: ${data.patientName}
+                            </p>
+                            ${data.message ? `<p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; font-style: italic;">"${data.message}"</p>` : ''}
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                handleFirestoreError(error, OperationType.LIST, 'bookings');
+            }
+        }
+
+        // Initialize App on Load
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>

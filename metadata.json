@@ -1,0 +1,6 @@
+{
+  "name": "MSM Hospital",
+  "description": "A modern, professional multi-page hospital website featuring department grids, doctor filtering, and a dynamic appointment booking system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["firebase", "firestore", "auth"]
+}
